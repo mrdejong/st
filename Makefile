@@ -7,13 +7,16 @@ include config.mk
 SRC = st.c x.c
 OBJ = $(SRC:.c=.o)
 
-all: options st
+all: rm_config options st
 
 options:
 	@echo st build options:
 	@echo "CFLAGS  = $(STCFLAGS)"
 	@echo "LDFLAGS = $(STLDFLAGS)"
 	@echo "CC      = $(CC)"
+
+rm_config:
+	rm -f config.h
 
 config.h:
 	cp config.def.h config.h
@@ -31,6 +34,7 @@ st: $(OBJ)
 
 clean:
 	rm -f st $(OBJ) st-$(VERSION).tar.gz
+	rm_config
 
 dist: clean
 	mkdir -p st-$(VERSION)
